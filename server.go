@@ -18,13 +18,14 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	reader := bufio.NewReader(conn)
 	for {
-		msg, err := bufio.NewReader(conn).ReadString('\n')
+		msg, err := reader.ReadString('\n')
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println("Client send: ", string(msg))
+		fmt.Println("Client send: ", msg)
 		newmsg := strings.ToUpper(msg)
-		conn.Write([]byte(newmsg + "\n"))
+		conn.Write([]byte(newmsg))
 	}
 }

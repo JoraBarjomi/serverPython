@@ -1,7 +1,7 @@
 import socket
 
 client = socket.socket()
-# hostname = "147.45.48.64"
+hostname = "2.59.161.68"
 # hostname = socket.gethostname()
 port = 12345
 client.connect((hostname, port))

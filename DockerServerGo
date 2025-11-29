@@ -3,4 +3,4 @@ WORKDIR /app
 COPY server.go ./
 RUN go build -o serverGo server.go
 EXPOSE 12345
-CMD ["./server"]
+CMD ["./serverGo"]

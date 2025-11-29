@@ -2,7 +2,7 @@ import socket
 
 client = socket.socket()
 # hostname = "147.45.48.64"
-hostname = socket.gethostname()
+# hostname = socket.gethostname()
 port = 12345
 client.connect((hostname, port))
 while True:

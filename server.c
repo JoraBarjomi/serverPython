@@ -1,17 +1,15 @@
-#include <netinet/in.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <unistd.h>
-#include <ctype.h>
 #include <stdbool.h>
-#include "zmq.h"
+#include <zmq.h>
 
 #define PORT 12345
 
 int main(int argc, char const* argv[])
 {
+
+    char *filename = "messages.txt";
+    FILE *fp = fopen(filename, "a");
+
     void* context = zmq_ctx_new();
     void* respond = zmq_socket(context, ZMQ_REP);
     
@@ -34,6 +32,12 @@ int main(int argc, char const* argv[])
         memcpy(buffer, data, data_size);
         buffer[data_size] = '\0';
         printf(" %s\n", buffer);
+
+        if(fp){
+            fputs(buffer, fp);
+            fputc('\n', fp);
+            fflush(fp);
+        }
         
         zmq_msg_close(&request);
 
@@ -51,5 +55,6 @@ int main(int argc, char const* argv[])
     
     zmq_close(respond);
     zmq_ctx_destroy(context);
+    fclose(fp);
     return 0;
 }

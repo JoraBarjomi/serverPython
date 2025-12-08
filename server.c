@@ -9,7 +9,7 @@
 int main(int argc, char const* argv[])
 {
 
-    char *filename = "messages.txt";
+    char *filename = "/app/data/messages.txt";
     FILE *fp = fopen(filename, "a");
 
     void* context = zmq_ctx_new();

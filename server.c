@@ -21,7 +21,12 @@ int main(int argc, char const* argv[])
 
         zmq_msg_t request;
         zmq_msg_init(&request);
-        zmq_msg_recv(&request, respond, 0);
+        int rc = zmq_msg_recv(&request, respond, 0);
+        if(rc == -1){
+          if(zmq_errno() == ETERM) break;
+          zmq_msg_close(&request);
+          continue;
+        }
         size_t data_size = zmq_msg_size(&request);
         char *data = (char *)zmq_msg_data(&request);
 
@@ -31,8 +36,6 @@ int main(int argc, char const* argv[])
         printf(" %s\n", buffer);
         
         zmq_msg_close(&request);
-
-        sleep(2);
 
         zmq_msg_t reply;
         zmq_msg_init_size(&reply, data_size);

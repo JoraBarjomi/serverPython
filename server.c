@@ -44,7 +44,10 @@ int main(int argc, char const* argv[])
         zmq_msg_close(&request);
 
         zmq_msg_t reply;
-        zmq_msg_init_size(&reply, data_size);
+        if(zmq_msg_init_size(&reply, data_size) != 0){
+            zmq_msg_close(&request);
+            continue;
+        }
 
         for(int i = 0; i < data_size; i++){
             buffer[i] = toupper(buffer[i]);
